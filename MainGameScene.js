@@ -11,7 +11,8 @@ class MainGameScene extends Phaser.Scene {
 
     create() {
         this.sprites = []; // Array to hold sprite objects
-        this.createSprites(10); // Create 10 sprites
+        this.createSprites(100); // Create 10 sprites
+        this.spaceCount=0;
 
         // Input handling
         this.spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -22,7 +23,12 @@ class MainGameScene extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(this.spaceBar)) {
+            this.spaceCount ++;
             this.makeSpritesFall();
+        }
+
+        if (this.spaceCount >= 10) {
+            this.scene.start('GameOverScene'); 
         }
 
         this.sprites.forEach(sprite => {
@@ -39,9 +45,12 @@ class MainGameScene extends Phaser.Scene {
             let y = Phaser.Math.Between(0, this.sys.game.config.height);
             let speed = Phaser.Math.Between(1, 5) * (Math.random() < 0.5 ? 1 : -1);
 
+            var width = Phaser.Math.Between(10, 200);
+
             let sprite = this.add.sprite(x, y, 'sprite');
             sprite.speed = speed;
-
+            sprite.displayWidth = width;
+            sprite.scaleY = sprite.scaleX;
             this.sprites.push(sprite);
         }
     }

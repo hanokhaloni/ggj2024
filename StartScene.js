@@ -9,7 +9,8 @@ class StartScene extends Phaser.Scene {
     }
 
     create() {
-        this.add.image(400, 300, 'startLogo');
+        this.add.image(1000, 500, 'startLogo');
+        
         this.add.text(100, 100, 'Start Game', { fill: '#0f0' }).setInteractive().on('pointerdown', () => {
             this.scene.start('MainGameScene');           
         });
